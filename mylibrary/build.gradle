@@ -2,29 +2,30 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-archivesBaseName = "android-oauth-handler"
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            groupId "com.test.testapp.testapplication"
-            artifactId "cust-library"
-            version version
-        }
-    }
-}
+ext {
+    bintrayRepo = 'mycustomlibrary'
+    bintrayName = 'com.test.testapp.mylibrary'
 
-bintray {
-    user = 'sakshi'
-    key = '1443971c4e0760ab2bbe7ce5b2e42d1bc103f01e'
-// jFrog plugin must be declared for this line to work
-    configurations = ['archives']
-// Package info for BinTray
-    pkg {
-        repo = "newrepo"
-        name = "test"
-    }
+    publishedGroupId = 'com.test.testapp.mylibrary'
+    libraryName = 'mylibrary'
+    artifact = 'com.test.testapp.mylibrary'
 
+    libraryDescription = 'A wrapper for Facebook Native Like Button (LikeView) on Android'
+
+    siteUrl = 'https://github.com/finpeace/CustomLibraryTest'
+    gitUrl = 'https://github.com/finpeace/CustomLibraryTest.git'
+
+    libraryVersion = '1.0'
+
+    developerId = 'finpeace'
+    developerName = 'Finpeace Technologies'
+    developerEmail = 'finpeace2016@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
 }
+version = "1.0"
 
 android {
     compileSdkVersion 24
@@ -66,3 +67,67 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+def siteUrl = 'https://github.com/finpeace/CustomLibraryTest'      // Homepage URL of the library
+def gitUrl = 'https://github.com/finpeace/CustomLibraryTest.git'   // Git repository URL
+group = "com.test.testapp.mylibrary"
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+
+                // Add your description here
+                name 'com.test.testapp.mylibrary' // TODO
+                description = 'test library' // TODO
+                url siteUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'finpeace' // TODO
+                        name 'Finpeace Technologies' // TODO
+                        email 'finpeace2016@gmail.com' // TODO
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+// https://github.com/bintray/gradle-bintray-plugin
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "mycustomlibrary"
+        // it is the name that appears in bintray when logged
+        name = "com.test.testapp.mylibrary" // TODO
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+        version {
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = properties.getProperty("bintray.gpg.password") //Optional. The passphrase for GPG signing'
+            }
+        }
+    }
+}
