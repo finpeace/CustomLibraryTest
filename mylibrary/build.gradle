@@ -1,8 +1,35 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+archivesBaseName = "android-oauth-handler"
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            groupId "com.test.testapp.testapplication"
+            artifactId "cust-library"
+            version version
+        }
+    }
+}
+
+bintray {
+    user = 'sakshi'
+    key = '1443971c4e0760ab2bbe7ce5b2e42d1bc103f01e'
+// jFrog plugin must be declared for this line to work
+    configurations = ['archives']
+// Package info for BinTray
+    pkg {
+        repo = "newrepo"
+        name = "test"
+    }
+
+}
 
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
+    publishNonDefault true
 
     defaultConfig {
         minSdkVersion 16
@@ -18,6 +45,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug{
+
+        }
+    }
+    repositories {
+        maven {
+            url  "https://dl.bintray.com/finpeace/maven"
+        }
     }
 }
 
@@ -27,5 +62,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'net.schmizz:sshj:0.10.0'
     testCompile 'junit:junit:4.12'
 }
+
