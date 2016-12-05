@@ -1,40 +1,38 @@
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = publishedGroupId                               // Maven Group ID for the artifact
-
+def siteUrl = 'https://github.com/finpeace/CustomLibraryTest'      // Homepage URL of the library
+def gitUrl = 'https://github.com/finpeace/CustomLibraryTest.git'   // Git repository URL
+group = "com.test.testapp.mylibrary"
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
         pom {
             project {
                 packaging 'aar'
-                groupId publishedGroupId
-                artifactId artifact
 
                 // Add your description here
-                name libraryName
-                description libraryDescription
+                name 'com.test.testapp.mylibrary' // TODO
+                description = 'test library' // TODO
                 url siteUrl
 
                 // Set your license
                 licenses {
                     license {
-                        name licenseName
-                        url licenseUrl
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
                 developers {
                     developer {
-                        id developerId
-                        name developerName
-                        email developerEmail
+                        id 'finpeace' // TODO
+                        name 'Finpeace Technologies' // TODO
+                        email 'finpeace2016@gmail.com' // TODO
                     }
                 }
                 scm {
                     connection gitUrl
                     developerConnection gitUrl
                     url siteUrl
-
                 }
             }
         }
