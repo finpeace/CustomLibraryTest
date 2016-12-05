@@ -3,23 +3,37 @@
 buildscript {
     repositories {
         jcenter()
-        maven {
-            url 'repo1.maven.org/maven2';
-        }
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
-plugins {   id "com.jfrog.bintray" version "1.5"}
+plugins {   id "com.jfrog.bintray" version "1.7"}
 
 allprojects {
     repositories {
         jcenter()
+    }
+}
+
+bintray {
+    user = 'finpeace'
+    key = '2154dba079889051a27165fcb3a3115f7bbb878b'
+
+    configurations = ['archives']
+    pkg {
+        repo = "mycustomlibrary"
+        // it is the name that appears in bintray when logged
+        name = "com.test.testapp.mylibrary" // TODO
+        userOrg = 'finpeace2016'
+        licenses = ["Apache-2.0"]
+        publish = true
     }
 }
