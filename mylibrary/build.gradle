@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 24
@@ -9,7 +11,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -29,9 +31,30 @@ android {
         }
     }
 }
-
+version = 1.0
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'net.schmizz:sshj:0.10.0'
+}
+bintray {
+    user = 'finpeace'
+    key = '2154dba079889051a27165fcb3a3115f7bbb878b'
+
+    configurations = ['archives']
+    pkg {
+        repo = "mycustomlibrary"
+        // it is the name that appears in bintray when logged
+        name = "final-package" // TODO
+        userOrg = 'finpeace2016'
+        licenses = ["Apache-2.0"]
+        publish = true
+        version {
+            name = '1.0.1-tuts'
+            desc = 'My test upload'
+            released  = new Date()
+            vcsTag = '1.0.1'
+        }
+    }
+
 }
